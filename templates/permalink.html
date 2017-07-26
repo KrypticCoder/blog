@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+	{% if error %}
+		<div class="error">{{error}}</div>
+  	{% endif %}
+  	{{post.render() | safe}}
+  	<br>
+    <div class="button"> {{post.num_likes}} Likes </div>
+    <br><br>
+    <form method="post">
+    	<textarea class="comment" name="comment">{{comment}}</textarea> <br>
+    	<button type="submit">Submit</button>
+    </form>
+
+    <br>
+    {% if new_comment and (new_comment.key().id()|string != deleted_comment_id|string) %}
+	    {{new_comment.comment}} <br>
+	    <b>{{new_comment.username()}}</b> <br>
+	    <a href="/blog/deletecomment/{{post.key().id()}}/{{new_comment.key().id()}}"><div type="submit" class="button" name="delete_comment_id" value="new_comment.key().id()">Delete</div></a>
+	    <div class="spacer button">| </div> 
+		<a href="/blog/editcomment/{{post.key().id()}}/{{c.key().id()}}"><div type="submit" class="button edit_comment" name="edit_comment_id" value="c.key().id()">Edit</div></a>
+		<hr>
+	{% endif %}
+
+    {% for c in comments%}
+    	{% if c.key().id()|string != deleted_comment_id|string %}
+		    {{c.comment}} <br>
+		    <b>{{c.username()}}</b> <br>
+		    <a href="/blog/deletecomment/{{post.key().id()}}/{{c.key().id()}}"><div type="submit" class="button" name="delete_comment_id" value="c.key().id()">Delete</div></a>
+		    <div class="spacer button">| </div> 
+		    <a href="/blog/editcomment/{{post.key().id()}}/{{c.key().id()}}"><div type="submit" class="button edit_comment" name="edit_comment_id" value="c.key().id()">Edit</div></a>
+		    <hr>
+		{% endif %}
+    {% endfor %}
+{% endblock %}

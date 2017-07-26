@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if deleted_post_id %}
+        Post deleted successfully
+    {% endif %}
+
+    <div class="error">{{error}}</div>
+
+    <br>
+
+    {% for p in posts %}
+        {% if p.key().id()|string != deleted_post_id|string %}
+            {{ p.render() | safe }}
+            <br>
+            <div class="post-subcontent">
+            	<a href="/blog/deletepost/{{p.key().id()}}"><div type="submit" class="delete-post button" name="delete_post_id" value="{{p.key().id()}}">Delete Post</div></a> 
+                <div class="spacer">|</div> 
+                <a href="/blog/editpost/{{p.key().id()}}"><div type="submit" class="edit-post button" name="edit_post_id" value="{{p.key().id()}}">Edit Post</div></a> 
+                <div class="spacer">|</div>
+                <a href="/blog/{{p.key().id()}}"><div type="submit" class="comment-post button" name="comment_post_id" value="{{p.key().id()}}">Comment</div></a> 
+                <div class="col-md-3 like-content">
+                    <form method="post">
+            	       <button class="typicons-thumbsUp button" name="like_post_id" value="{{p.key().id()}}"></button>
+                        <div class="button"> {{p.num_likes}} Likes </div>
+                    </form>
+                </div>  
+            </div>
+            <br><br> 
+
+        {% endif %}
+    {% endfor %}
+
+  
+
+{% endblock %}

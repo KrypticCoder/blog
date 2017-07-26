@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link type="text/css" rel="stylesheet" href="/static/main.css" />
+  <link rel="stylesheet" href="http://weloveiconfonts.com/api/?family=typicons" />
+  <link rel="stylesheet" href="/static/bootstrap.min.css">
+
+  <title>CS 253 Blog</title>
+</head>
+
+<body class="container">
+    <a href="/" class="main-title">
+      CS 253 Blog
+    </a>
+
+    <div class="login-area">
+      {% if user %}
+        {{user.name}} (<a class="login-link" href="/logout">logout</a>)
+      {% else %}
+        <a class="login-link" href="/login">login</a>
+        |
+        <a class="login-link" href="/signup">signup</a>
+      {% endif %}
+    </div>
+
+    <a href="/blog/newpost"><button>New Post</button></a> <br><br>
+
+    <div id="content">
+    {% block content %}
+    {% endblock %}
+    </div>
+</body>
+
+</html>
+
